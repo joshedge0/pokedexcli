@@ -1,6 +1,6 @@
 package main
 
-func commandMapb() error {
+func commandMapb(cfg *config) error {
 	// if previous == ""
 	// return you're on the first page
 

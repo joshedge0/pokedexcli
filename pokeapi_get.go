@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func pokeapiGet(url string) []location {
+func pokeapiGet(url string) apiRes {
 	res, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
@@ -23,7 +23,7 @@ func pokeapiGet(url string) []location {
 
 	data := apiRes{}
 	err = json.Unmarshal(body, &data)
-	return data.Results
+	return data
 }
 
 type apiRes struct {
@@ -31,9 +31,4 @@ type apiRes struct {
 	Next     string     `json:"next"`
 	Previous string     `json:"previous"`
 	Results  []location `json:"results"`
-}
-
-type location struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
 }
