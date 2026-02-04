@@ -32,3 +32,8 @@ type apiRes struct {
 	Previous string     `json:"previous"`
 	Results  []location `json:"results"`
 }
+
+type location struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
+}

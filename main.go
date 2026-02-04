@@ -13,7 +13,7 @@ func main() {
 
 func loadConfig() (*config, error) {
 	return &config{
-		Next:     "",
+		Next:     "https://pokeapi.co/api/v2/location-area/",
 		Previous: "",
 	}, nil
 }
