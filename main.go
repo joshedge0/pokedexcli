@@ -1,24 +1,16 @@
 package main
 
-import "log"
+import (
+	"time"
+
+	"github.com/joshedge0/pokedexcli/internal/pokeapi"
+)
 
 func main() {
-	cfg, err := loadConfig()
-	if err != nil {
-		log.Fatal(err)
+	pokeClient := pokeapi.NewClient(5 * time.Second)
+	cfg := &config{
+		pokeapiClient: pokeClient,
 	}
 
 	startRepl(cfg)
-}
-
-func loadConfig() (*config, error) {
-	return &config{
-		Next:     "https://pokeapi.co/api/v2/location-area/",
-		Previous: "",
-	}, nil
-}
-
-type config struct {
-	Next     string
-	Previous string
 }

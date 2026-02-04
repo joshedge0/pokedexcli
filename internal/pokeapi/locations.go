@@ -1,4 +1,4 @@
-package main
+package pokeapi
 
 import (
 	"encoding/json"
@@ -7,7 +7,12 @@ import (
 	"net/http"
 )
 
-func pokeapiGet(url string) apiRes {
+func (c *Client) GetLocations(listURL *string) (apiRes, error) {
+	url := baseURL + "/location-area"
+	if listURL != nil {
+		url = *listURL
+	}
+
 	res, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
@@ -23,13 +28,13 @@ func pokeapiGet(url string) apiRes {
 
 	data := apiRes{}
 	err = json.Unmarshal(body, &data)
-	return data
+	return data, nil
 }
 
 type apiRes struct {
 	Count    int        `json:"count"`
-	Next     string     `json:"next"`
-	Previous string     `json:"previous"`
+	Next     *string    `json:"next"`
+	Previous *string    `json:"previous"`
 	Results  []location `json:"results"`
 }
 

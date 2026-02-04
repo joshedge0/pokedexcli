@@ -5,10 +5,17 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/joshedge0/pokedexcli/internal/pokeapi"
 )
 
+type config struct {
+	pokeapiClient    pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
+}
+
 func startRepl(cfg *config) {
-	//config := config{Next:"", Previous:""}
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -55,7 +62,7 @@ func getCommands() map[string]cliCommand {
 		"map": {
 			name:        "map",
 			description: "Displays next 20 map locations",
-			callback:    commandMap,
+			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",
