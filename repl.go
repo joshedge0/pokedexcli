@@ -20,11 +20,13 @@ func startRepl(cfg *config) {
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
-		commandName := cleanInput(scanner.Text())[0]
+		inputString := cleanInput(scanner.Text())
+		commandName := inputString[0]
+		params := inputString[1:]
 
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback(cfg)
+			err := command.callback(cfg, params)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -44,7 +46,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, []string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -68,6 +70,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Displays previous 20 map locations",
 			callback:    commandMapb,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Explores a map location",
+			callback:    commandExplore,
 		},
 	}
 }
