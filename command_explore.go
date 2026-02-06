@@ -9,23 +9,15 @@ func commandExplore(cfg *config, params []string) error {
 	if len(params) == 0 {
 		return errors.New("No location provided to explore")
 	}
+	data, err := cfg.pokeapiClient.GetLocation(&params[0])
+	if err != nil {
+		return err
+	}
+	pokemon := data.PokemonEncounters
 
-	fmt.Printf("%s\n", params[0])
+	for _, poke := range pokemon {
+		fmt.Printf("name: %s\n", poke.Pokemon.Name)
+	}
+
 	return nil
-	/*
-		data, err := cfg.pokeapiClient.GetLocations(cfg.nextLocationsURL)
-		if err != nil {
-			return errors.New("temp")
-		}
-		locations := data.Results
-
-		for _, loc := range locations {
-			fmt.Printf("name: %s\n", loc.Name)
-		}
-
-		cfg.nextLocationsURL = data.Next
-		cfg.prevLocationsURL = data.Previous
-
-		return nil
-	*/
 }
