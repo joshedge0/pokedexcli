@@ -10,10 +10,18 @@ func commandMapf(cfg *config, params []string) error {
 	if err != nil {
 		return err
 	}
+
 	locations := data.Results
 
+	if len(locations) == 0 {
+		fmt.Println("No areas to explore")
+		return nil
+	}
+
+	fmt.Println("Areas to explore:")
+
 	for _, loc := range locations {
-		fmt.Printf("name: %s\n", loc.Name)
+		fmt.Printf("- %s\n", loc.Name)
 	}
 
 	cfg.nextLocationsURL = data.Next
